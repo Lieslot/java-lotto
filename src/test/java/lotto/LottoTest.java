@@ -1,5 +1,12 @@
 package lotto;
 
+import camp.nextstep.edu.missionutils.Console;
+import lotto.Exception.BonusNumberFormatException;
+import lotto.domain.Lotto;
+import lotto.domain.WinningLotto;
+import lotto.utils.Utils;
+import lotto.vo.BonusNumber;
+import lotto.vo.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +29,45 @@ class LottoTest {
         assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5, 5)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+    @DisplayName("로또 번호와 보너스 번호가 중복될 경우 예외를 발생시킨다")
+    @Test
+    void bonusNumberDuplicationTest() {
 
-    // 아래에 추가 테스트 작성 가능
+
+        assertThatThrownBy(()-> new WinningLotto(List.of(1, 2, 3, 4, 5, 6),new BonusNumber(6)))
+                .isInstanceOf(IllegalArgumentException.class);
+
+
+
+    }
+
+    @DisplayName("로또 번호가 범위를 넘어갈 때 예외를 발생시킨다")
+    @Test
+    void numberRangeExceptionTest() {
+
+
+        assertThatThrownBy(()-> new Lotto(List.of(1, 2, 3, 4, 50, 6)));
+
+
+
+    }
+
+
+
+    @DisplayName("금액이 1000원 단위이면서 음수일 경우 예외를 발생시킨다.")
+    @Test
+    void moneyNegativeExceptionTest() {
+
+
+        assertThatThrownBy(()-> new Money(-1000));
+
+
+
+    }
+
+
+
+
+
+
 }
